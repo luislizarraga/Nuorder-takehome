@@ -1,0 +1,12 @@
+div.dropdown-item.is-active {
+  background-color: #485fc7;
+  color: #fff;
+}
+
+div.dropdown-menu {
+  min-width: 100%;
+}
+
+div.dropdown {
+  display: inherit;
+}

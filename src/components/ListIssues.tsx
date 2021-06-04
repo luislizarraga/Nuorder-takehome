@@ -1,10 +1,10 @@
 import axios from "axios";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Box, Columns, Tag } from "react-bulma-components";
 
 const GRAPHURL = 'https://api.github.com/graphql'
 
-interface githubEdge {
+export interface githubEdge {
   title: string,
   labels: Array<any>,
   url: string
@@ -26,8 +26,8 @@ async function getIssuesFromGithub(search: string | undefined): Promise<any> {
 
 
 export default function ListIssues(props: any) {
-  const { searchValue, doSearch, setDoSearch } = props
-  const [issues, setIssues] = useState<Array<githubEdge> | Array<any>>([]);
+  const { searchValue, doSearch, setDoSearch, issues, setIssues } = props
+  
   const listItems = issues.map((elem: any, index: number) => {
     return (
       <Box key={elem.url}>
@@ -46,7 +46,7 @@ export default function ListIssues(props: any) {
   })
 
   useEffect(() => {
-    getIssuesFromGithub(searchValue).then((result) => { 
+    getIssuesFromGithub(searchValue).then((result) => {
       if (result.errors) {
         alert('There was an error fetching the information!\n' + result.errors[0].message)
         return
@@ -67,6 +67,13 @@ export default function ListIssues(props: any) {
     }).catch((error) => {
       alert('There was an error fetching the information!\n' + error.toString())
     });
+    // setIssues([
+    //   {title: 'Uno', labels:['a:uno'], url:'unourl'},
+    //   {title: 'Dos', labels:['a:dos'], url:'dosurl'},
+    //   {title: 'Tres', labels:['a:tres'], url:'tresurl'},
+    //   {title: 'Cuatro', labels:['a:cuatro'], url:'cuatrourl'},
+    //   {title: 'Cinco', labels:['a:cinco'], url:'cincourl'},
+    // ])
   }, [doSearch])
 
   return (
